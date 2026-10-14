@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card form-wrapper">
+    <h3 style="margin-top:0; margin-bottom: 5px; font-size: 18px;">Log Resource Consumption</h3>
+    <p style="color: #6b7280; font-size:13px; margin-bottom: 25px;">Record operations utility activity logs below.</p>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label>Select Reporting Facility</label>
+            <select name="facility_id" class="form-control" required>
+                {% for facility in facilities %}
+                <option value="{{ facility.id }}">{{ facility.name }} ({{ facility.region }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Billing Period</label>
+            <input type="month" name="log_month" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Utility Stream Type</label>
+            <select name="energy_type" class="form-control" required>
+                <option value="Electricity">Purchased Electricity (kWh)</option>
+                <option value="Natural Gas">Facility Natural Gas (therms)</option>
+                <option value="Diesel/Gasoline">Fleet Transportation (gallons)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Total Quantity Consumed</label>
+            <input type="number" step="0.01" name="amount" placeholder="e.g. 4500.50" class="form-control" required>
+        </div>
+        
+        <button type="submit" class="btn-submit">Compute & Submit Metrics</button>
+    </form>
+</div>
+{% endblock %}
+

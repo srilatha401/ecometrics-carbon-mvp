@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Environmental Dashboard</h2>
+<p>Tracking Direct Scope 1 & Indirect Scope 2 Metrics.</p>
+
+<div class="grid">
+    <!-- Main Aggregate Score Card Widget -->
+    <div class="card">
+        <h3 class="card-title">Total Net Footprint</h3>
+        <div class="kpi-value">
+            {{ "%.2f"|format(total_emissions) }} <span class="kpi-unit">MTCO₂e</span>
+        </div>
+        <p style="font-size: 11px; color:#6b7280; margin:0;">Calculated gross greenhouse gas impact totals.</p>
+    </div>
+
+    <!-- Data Table Distribution Widget -->
+    <div class="card">
+        <h3 class="card-title">Source Asset Distribution</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Energy Source Vector</th>
+                    <th class="text-right">Carbon Load</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in breakdown %}
+                <tr>
+                    <td><strong>{{ row.energy_type }}</strong></td>
+                    <td class="text-right impact-value">{{ "%.2f"|format(row.total_co2) }} MTCO₂e</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #9ca3af; padding: 20px 0;">No resource telemetry logged. Please insert utility bill info.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Gemini AI Insights Container Panel Block -->
+<div class="ai-box">
+    <div class="ai-box-title">✨ Gemini Strategic Sustainability Advisory</div>
+    <div class="ai-box-content">{{ ai_insights }}</div>
+</div>
+{% endblock %}
